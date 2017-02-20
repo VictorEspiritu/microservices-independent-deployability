@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+    training_management_webserver:
+        # build the image using the Dockerfile in this directory:
+        build:
+            context: ./
+            dockerfile: ./training_management/docker/webserver/Dockerfile
+
+#        # tag the built image like this:
+#        image: matthiasnoback/training_management_webserver
+
+        # expose the container's port 80 as localhost port 8080
+        ports:
+            - "8081:80"
+
+        # connect the webserver to the "front" network
+        networks:
+            - front
+
+        volumes:
+            # make file changes to the project working immediate
+            - ./training_management/:/opt/training_management
