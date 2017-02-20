@@ -1,0 +1,3 @@
+- Rolling update
+- Define front network in compose.yml
+- Override volumes in override.yml
