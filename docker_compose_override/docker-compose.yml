@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+    hello_world:
+        image: hello_world
+        environment:
+            - RUNTIME_ENVIRONMENT=prod
+        ports:
+            - "8080:80"

@@ -2,11 +2,6 @@ version: '3'
 
 services:
     training_management_webserver:
-        # build the image using the Dockerfile in this directory:
-        build:
-            context: ./training_management/
-            dockerfile: docker/webserver/Dockerfile
-
         # tag the built image like this:
         image: matthiasnoback/training_management_webserver
 
@@ -34,10 +29,6 @@ services:
 #            - ./training_management/:/opt/training_management
 
     training_marketplace_webserver:
-        build:
-            context: ./training_marketplace/
-            dockerfile: docker/webserver/Dockerfile
-
         image: matthiasnoback/training_marketplace_webserver
 
         ports:
@@ -62,4 +53,4 @@ services:
 
 networks:
     front:
-        external: true
+        driver: overlay

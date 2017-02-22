@@ -2,7 +2,6 @@
 FROM php:7.1-cli
 
 # Expose a running instance of PHP's built-in web server
-EXPOSE 80
 ENTRYPOINT ["php", "-S", "0.0.0.0:80", "-t", "web/"]
 
 # The built-in PHP webserver only responds to SIGINT, not to SIGTERM

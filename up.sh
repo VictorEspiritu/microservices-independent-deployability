@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-./build.sh
+# Let the Docker client talk to the local machine
+eval $(docker-machine env -u)
+
+# Build the images
+docker-compose build
 
 # Run the containers
 docker-compose up -d --force-recreate
