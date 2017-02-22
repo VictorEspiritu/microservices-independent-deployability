@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+    frontend:
+        image: ${DOCKER_HUB_USERNAME}/swarm-demo-frontend
+        ports:
+            # expose frontend as a web service "to the world"
+            - "80:80"
+        depends_on:
+            # start the backend service first
+            - backend
+
+    backend:
+        image: ${DOCKER_HUB_USERNAME}/swarm-demo-backend
