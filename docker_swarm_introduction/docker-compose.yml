@@ -12,3 +12,8 @@ services:
 
     backend:
         image: ${DOCKER_HUB_USERNAME}/swarm-demo-backend
+        deploy:
+            replicas: 2
+            update_config:
+                parallelism: 1
+                delay: 5s

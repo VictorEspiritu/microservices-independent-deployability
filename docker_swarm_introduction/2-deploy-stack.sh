@@ -9,7 +9,11 @@
     eval $(docker-machine env manager1)
 
     # Deploy to the Swarm
-    docker stack deploy --compose-file ./docker-compose.yml all_services
+    docker stack deploy \
+        --compose-file ./docker-compose.yml \
+        swarm_demo
+
+    docker service logs -f swarm_demo_backend
 
 ###
 echo "Go visit http://$(docker-machine ip manager1)/"
