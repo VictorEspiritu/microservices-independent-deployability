@@ -1,28 +1,10 @@
 version: '3'
 
 services:
-    service_build:
-        image: $DOCKER_HUB_USERNAME/service_build
+    test:
+        image: $DOCKER_HUB_USERNAME/test
         build:
             context: ./
-            dockerfile: docker/service_build/Dockerfile
+            dockerfile: docker/test/Dockerfile
         volumes:
             - ./:/opt
-
-    service_code_test:
-        image: $DOCKER_HUB_USERNAME/service_code_test
-        build:
-            context: ./
-            dockerfile: docker/service_code_test/Dockerfile
-        volumes:
-            - ./:/opt
-
-    service_image_test:
-        image: $DOCKER_HUB_USERNAME/service_image_test
-        build:
-            context: ./
-            dockerfile: docker/service_image_test/Dockerfile
-        volumes:
-            - ./:/opt
-        depends_on:
-            - service

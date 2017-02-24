@@ -1,5 +1,4 @@
 FROM php:7.1-cli
-
 RUN DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
     apt-get install -y git zlib1g-dev && \
@@ -9,7 +8,6 @@ RUN DEBIAN_FRONTEND=noninteractive && \
     php -r "unlink('composer-setup.php');" && \
     chmod +x composer.phar && \
     mv composer.phar /usr/local/bin/composer
-
 VOLUME /opt
 WORKDIR /opt
-ENTRYPOINT ["docker/service_build/build.sh"]
+ENTRYPOINT ["docker/test/run_tests.sh"]

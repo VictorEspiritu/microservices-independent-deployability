@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+    service:
+        image: $DOCKER_HUB_USERNAME/service:latest
+    service2:
+        image: $DOCKER_HUB_USERNAME/service:latest

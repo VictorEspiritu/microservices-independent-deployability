@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [[ "$1" != "test" ]]; then
+    echo "To run the integration tests, run the integration container with an extra argument: 'test'"
+    exit 0
+fi
+
 function fail() {
     echo "Assertion failed. $1"
     exit 1

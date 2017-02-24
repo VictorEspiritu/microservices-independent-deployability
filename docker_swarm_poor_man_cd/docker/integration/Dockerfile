@@ -6,4 +6,4 @@ RUN apk add --no-cache curl bash
 VOLUME /opt
 WORKDIR /opt
 
-ENTRYPOINT ["docker/service_image_test/run_tests.sh"]
+ENTRYPOINT ["docker/integration/run_tests.sh"]
