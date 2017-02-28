@@ -7,42 +7,56 @@ set -e
 eval $(docker-machine env -u)
 
 BUILD_REFERENCE=(git rev-parse --short --verify HEAD)
-export TEST_IMAGE=${DOCKER_HUB_USERNAME}/service:$BUILD_REFERENCE
-RELEASE_IMAGE=${DOCKER_HUB_USERNAME}/service:latest
+export TEST_IMAGE_TAG=${DOCKER_HUB_USERNAME}/service:$BUILD_REFERENCE
+RELEASE_IMAGE_TAG=${DOCKER_HUB_USERNAME}/service:latest
 
 #----------------------------------------------------
-# Build the test container and run the tests
+# Build the test container and run the unit tests
 #----------------------------------------------------
-docker_compose_test="docker-compose -f docker-compose.test.yml"
-$docker_compose_test build
-$docker_compose_test run test
+docker build \
+    -t $DOCKER_HUB_USERNAME/unit_tests \
+    -f docker/unit_tests/Dockerfile \
+    ./
+docker run \
+    --rm \
+    -t \
+    -v $(pwd):/opt \
+    $DOCKER_HUB_USERNAME/unit_tests
 
 #----------------------------------------------------
 # Build the build container and run the build
 #----------------------------------------------------
-docker_compose_build="docker-compose -f docker-compose.build.yml"
-$docker_compose_build build
-$docker_compose_build run build
-docker build -t $TEST_IMAGE build/service/docker
+docker build \
+    -t $DOCKER_HUB_USERNAME/build \
+    -f docker/build/Dockerfile \
+    ./
+docker run \
+    --rm  \
+    -t \
+    -v $(pwd):/opt \
+    $DOCKER_HUB_USERNAME/build
+docker build \
+    -t $TEST_IMAGE_TAG \
+    build/service/docker
 
 #----------------------------------------------------
-# Build the integration containers and start them
+# Build the service_test containers and start them
 #----------------------------------------------------
-docker_compose_integration="docker-compose -f docker-compose.integration.yml"
-$docker_compose_integration build
-$docker_compose_integration up -d
+docker_compose_service_tests="docker-compose -f docker-compose.service_tests.yml"
+$docker_compose_service_tests build
+$docker_compose_service_tests up -d
 
 #----------------------------------------------------
-# Run integration tests and stop all services
+# Run service tests and stop all services
 #----------------------------------------------------
-$docker_compose_integration run integration test
-$docker_compose_integration stop
+$docker_compose_service_tests run service_tests all
+$docker_compose_service_tests down
 
 #----------------------------------------------------
 # Release the new image of the service
 #----------------------------------------------------
-docker tag $TEST_IMAGE $RELEASE_IMAGE
-docker push $RELEASE_IMAGE
+docker tag $TEST_IMAGE_TAG $RELEASE_IMAGE_TAG
+docker push $RELEASE_IMAGE_TAG
 
 #----------------------------------------------------
 # Deploy

@@ -10,4 +10,4 @@ RUN DEBIAN_FRONTEND=noninteractive && \
     mv composer.phar /usr/local/bin/composer
 VOLUME /opt
 WORKDIR /opt
-ENTRYPOINT ["docker/test/run_tests.sh"]
+ENTRYPOINT ["docker/unit_tests/run_tests.sh"]

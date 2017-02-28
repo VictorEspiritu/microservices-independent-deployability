@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-if [[ "$1" != "test" ]]; then
-    echo "To run the integration tests, run the integration container with an extra argument: 'test'"
+if [[ "$1" != "all" ]]; then
+    echo "To run the service tests, run the `service_tests` container with an extra argument: 'all'"
     exit 0
 fi
 
