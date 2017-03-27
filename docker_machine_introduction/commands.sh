@@ -30,6 +30,8 @@ read
     docker-machine env hello-world-node
     eval $(docker-machine env hello-world-node)
 
+    docker pull $DOCKER_HUB_USERNAME/hello_world_image
+
     docker run \
         --rm \
         -d \
