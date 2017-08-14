@@ -10,7 +10,7 @@ read
 
     eval $(docker-machine env manager1)
     docker service update \
-        --image matthiasnoback/swarm-demo-backend:latest \
+        --image "${DOCKER_HUB_USERNAME}/swarm-demo-backend:latest" \
         swarm_demo_backend
 
     watch docker service ps swarm_demo_backend
